@@ -44,7 +44,7 @@ class _AddAttendanceState extends State<AddAttendance> {
               );
             }
           },
-          child: Text('Add Attendance'),
+          child: Text('+ Attendance'),
         ),
       ),
     );
@@ -124,8 +124,8 @@ class _AddAttendanceState extends State<AddAttendance> {
     int day = now.day;
 
     // Form the date string in YYYY-MM-DD format
-    String dateString =
-        '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
+    String dateString = "2024-04-25";
+    // '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
 
     String hour =
         now.hour.toString().padLeft(2, '0'); // Ensure two digits for hour
@@ -135,7 +135,10 @@ class _AddAttendanceState extends State<AddAttendance> {
     String timeAsString = '$hour:$minute';
 
     // Add attendance record to Firestore
-    FirebaseFirestore.instance.collection('attendance').doc(uid).set({
+    FirebaseFirestore.instance
+        .collection('attendance')
+        .doc("$uid _ $dateString")
+        .set({
       'uid': uid,
       'class': loggedInStudentClass,
       'macAddress': loggedInStudentMacAddress,

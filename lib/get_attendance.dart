@@ -151,7 +151,7 @@ class _FetchAttendanceState extends State<FetchAttendance> {
         studentUIDs.add(uid);
         // print(studentUIDs);
         // Initialize attendance status for each student as false (not present)
-        attendanceMap[uid] = false;
+        attendanceMap["$uid _ $dateString"] = false;
 
         // Print student name and email (you can remove this if not needed)
         print('Student Name: $name, Email: $email');
@@ -166,16 +166,17 @@ class _FetchAttendanceState extends State<FetchAttendance> {
               .get();
 
       attendanceQuerySnapshot.docs.forEach((attendanceDoc) {
-        String uid = attendanceDoc.id; // Assuming UID is used as document ID
+        String reluid = attendanceDoc.id; // Assuming UID is used as document ID
 
         // Mark student as present
-        attendanceMap[uid] = true;
+        attendanceMap[reluid] = true;
       });
 
       // List students who are not present or have no attendance data
       List<String> absentStudents = [];
       studentUIDs.forEach((uid) {
-        if (!attendanceMap.containsKey(uid) || attendanceMap[uid] == false) {
+        if (!attendanceMap.containsKey("$uid _ $dateString") ||
+            attendanceMap["$uid _ $dateString"] == false) {
           absentStudents.add(uid);
         }
       });
@@ -202,12 +203,12 @@ class _FetchAttendanceState extends State<FetchAttendance> {
             String email =
                 userData['email'] ?? ''; // Fetch student email from Firestore
             print('Name: $name, Email: $email'); // Debugging
-            if (attendanceMap.containsKey(uid)) {
+            if (attendanceMap.containsKey("$uid _ $dateString")) {
               // Student present
               attendanceData.add({
                 'name': name,
                 'email': email,
-                'present': attendanceMap[uid],
+                'present': attendanceMap["$uid _ $dateString"],
               });
             } else {
               // No attendance data for the student

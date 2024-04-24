@@ -32,8 +32,7 @@ class classDropdown extends StatelessWidget {
         return DropdownButton<String>(
           items: dropdownItems,
           onChanged: (String? selectedValue) {
-            onChanged?.call(
-                selectedValue, ''); // Passing empty string for macAddress
+            onChanged?.call(selectedValue, '');
           },
           hint: Text('Select a class'),
         );

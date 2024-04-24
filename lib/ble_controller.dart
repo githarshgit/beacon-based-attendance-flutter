@@ -5,7 +5,6 @@ import 'package:permission_handler/permission_handler.dart';
 class BleController extends GetxController {
   FlutterBlue ble = FlutterBlue.instance;
 
-// This Function will help users to scan near by BLE devices and get the list of Bluetooth devices.
   Future scanDevices() async {
     if (await Permission.bluetoothScan.request().isGranted) {
       if (await Permission.bluetoothConnect.request().isGranted) {
