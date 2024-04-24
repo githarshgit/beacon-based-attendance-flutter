@@ -35,7 +35,7 @@ dependencies:
   firebase_core: ^2.27.2
   flutter_blue: 
   flutter_beacon:
-  permission_handler:
+  permission_handler: ^11.3.1
   cloud_firestore:
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,6 +43,11 @@ dependencies:
   cupertino_icons: ^1.0.6
   get: ^4.6.6
   firebase_auth: ^4.19.0
+  firebase_database: ^10.5.2
+  excel: ^4.0.3
+  file_picker: ^8.0.2
+  provider: ^6.1.2
+ 
 
 dev_dependencies:
   flutter_test:

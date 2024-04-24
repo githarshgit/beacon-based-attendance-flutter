@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smartattendancebeacon/faculty_dashboard.dart';
 import 'admin_dashboard.dart';
+import 'student_dashboard.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -49,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
           } else if (role == 'student') {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => StudentDashboard()),
+              MaterialPageRoute(builder: (context) => StudentDashboardPage()),
             );
           } else {
             // Handle unknown role
@@ -84,7 +85,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
         title: Text('Login'),
       ),
       body: Padding(
@@ -109,84 +109,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class AdminDashboard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Admin Dashboard'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Center(
-        child: Text('Welcome to Admin Dashboard'),
-      ),
-    );
-  }
-}
-
-class FacultyDashboard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Faculty Dashboard'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Center(
-        child: Text('Welcome to Faculty Dashboard'),
-      ),
-    );
-  }
-}
-
-class StudentDashboard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Student Dashboard'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Center(
-        child: Text('Welcome to Student Dashboard'),
       ),
     );
   }
