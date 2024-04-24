@@ -10,9 +10,6 @@ class AddStudentExcel extends StatefulWidget {
 }
 
 class _AddStudentExcelState extends State<AddStudentExcel> {
-  String? _selectedClass;
-  String? _selectedMacAddress;
-
   Future<void> _addStudentsFromExcel() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -22,15 +19,12 @@ class _AddStudentExcelState extends State<AddStudentExcel> {
 
       if (result != null) {
         PlatformFile file = result.files.first;
-        List<int>? bytes = file.bytes; // Make bytes nullable
+        List<int>? bytes = file.bytes;
         if (bytes != null) {
-          // Check if bytes is not null
           var excel = Excel.decodeBytes(bytes);
           var table = excel.tables[excel.tables.keys.first];
 
-          for (var row in table!.rows) {
-            // Rest of your code to process the Excel data...
-          }
+          for (var row in table!.rows) {}
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -38,7 +32,6 @@ class _AddStudentExcelState extends State<AddStudentExcel> {
             ),
           );
         } else {
-          // Handle the case where bytes is null
           print('Error: No bytes found in the selected file.');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -70,10 +63,7 @@ class _AddStudentExcelState extends State<AddStudentExcel> {
           children: [
             classDropdown(
               onChanged: (String? className, String? macAddress) {
-                setState(() {
-                  _selectedClass = className;
-                  _selectedMacAddress = macAddress;
-                });
+                setState(() {});
               },
             ),
             SizedBox(height: 20),

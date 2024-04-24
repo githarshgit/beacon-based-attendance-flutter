@@ -12,16 +12,14 @@ class _AddStudentState extends State<AddStudent> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String? _selectedclass;
-  String? _selectedMacAddress; // Add this line
+  String? _selectedMacAddress;
 
   void _addStudent() async {
-    // Modify to not take any parameters
     String name = _nameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
     String selectedClass = _selectedclass!;
-    String selectedMacAddress =
-        _selectedMacAddress!; // Get the selected MAC address
+    String selectedMacAddress = _selectedMacAddress!;
 
     try {
       UserCredential userCredential =
@@ -39,7 +37,7 @@ class _AddStudentState extends State<AddStudent> {
         'email': email,
         'class': selectedClass,
         'role': 'student',
-        'macAddress': selectedMacAddress, // Include the selected MAC address
+        'macAddress': selectedMacAddress,
       });
 
       _nameController.clear();
@@ -47,7 +45,7 @@ class _AddStudentState extends State<AddStudent> {
       _passwordController.clear();
       setState(() {
         _selectedclass = null;
-        _selectedMacAddress = null; // Reset the selected MAC address
+        _selectedMacAddress = null;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -102,8 +100,7 @@ class _AddStudentState extends State<AddStudent> {
               onChanged: (String? className, String? macAddress) {
                 setState(() {
                   _selectedclass = className;
-                  _selectedMacAddress =
-                      macAddress; // Set the selected MAC address
+                  _selectedMacAddress = macAddress;
                   print(_selectedMacAddress);
                 });
               },
@@ -121,7 +118,7 @@ class _AddStudentState extends State<AddStudent> {
 }
 
 class classDropdown extends StatefulWidget {
-  final Function(String?, String?) onChanged; // Add a parameter for MAC address
+  final Function(String?, String?) onChanged;
 
   classDropdown({required this.onChanged});
 
@@ -131,7 +128,7 @@ class classDropdown extends StatefulWidget {
 
 class _classDropdownState extends State<classDropdown> {
   String? _selectedClass;
-  String? _selectedMacAddress; // Add this line
+  String? _selectedMacAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -152,9 +149,8 @@ class _classDropdownState extends State<classDropdown> {
                 (doc) => doc['name'] == value,
               );
               var selectedMacAddress =
-                  selectedClassDoc['macAddress']; // Get the MAC address
-              widget.onChanged(value,
-                  selectedMacAddress); // Pass both class name and MAC address
+                  selectedClassDoc['macAddress']; //  MAC address
+              widget.onChanged(value, selectedMacAddress);
             });
           },
           items: classDocs.map<DropdownMenuItem<String>>((classDoc) {

@@ -18,7 +18,6 @@ class _BluetoothScanPageState extends State<BluetoothScanPage> {
     final deviceName = device.name;
     final macAddress = device.id.id;
 
-    // Check if device with the same name and MAC address already exists
     final querySnapshot = await _firestore
         .collection('class')
         .where('name', isEqualTo: deviceName)
@@ -26,7 +25,6 @@ class _BluetoothScanPageState extends State<BluetoothScanPage> {
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      // Device already exists, show a message
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -46,7 +44,6 @@ class _BluetoothScanPageState extends State<BluetoothScanPage> {
         },
       );
     } else {
-      // Device does not exist, proceed with adding it
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -63,7 +60,6 @@ class _BluetoothScanPageState extends State<BluetoothScanPage> {
               TextButton(
                 child: Text('Yes'),
                 onPressed: () async {
-                  // Upload device data to Firestore
                   await _firestore.collection('class').add({
                     'name': deviceName,
                     'macAddress': macAddress,

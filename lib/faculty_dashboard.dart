@@ -5,8 +5,6 @@ import 'package:smartattendancebeacon/add_student_excel.dart';
 import 'package:smartattendancebeacon/bluetooth_scan.dart';
 import 'package:smartattendancebeacon/get_attendance.dart';
 import 'package:smartattendancebeacon/login_page.dart';
-import 'package:smartattendancebeacon/test.dart';
-import 'class_list.dart';
 
 class FacultyDashboardPage extends StatefulWidget {
   @override

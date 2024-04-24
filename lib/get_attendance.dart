@@ -79,7 +79,6 @@ class _FetchAttendanceState extends State<FetchAttendance> {
                   // Fetch attendance data for the selected class and date
                   fetchAttendance(selectedClass!, _selectedDate);
                 } else {
-                  // Class not selected
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Please select a class.'),
@@ -93,7 +92,7 @@ class _FetchAttendanceState extends State<FetchAttendance> {
                 ),
               ),
             ),
-            SizedBox(height: 10), // Adjust this spacing as needed
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -140,7 +139,6 @@ class _FetchAttendanceState extends State<FetchAttendance> {
 
   Future<void> fetchAttendance(
       String selectedClass, DateTime selectedDate) async {
-    // Form the date string in YYYY-MM-DD format
     String dateString =
         '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}';
     print(dateString);
@@ -152,7 +150,6 @@ class _FetchAttendanceState extends State<FetchAttendance> {
               .where('macAddress', isEqualTo: selectedClass)
               .get();
 
-      // Extract all the student UIDs and initialize a map to store attendance status
       List<String> studentUIDs = [];
       Map<String, bool> attendanceMap = {};
 
@@ -163,15 +160,14 @@ class _FetchAttendanceState extends State<FetchAttendance> {
 
         // Add student UID to the list
         studentUIDs.add(uid);
-        // print(studentUIDs);
-        // Initialize attendance status for each student as false (not present)
+        print(studentUIDs);
+
         attendanceMap["$uid _ $dateString"] = false;
 
-        // Print student name and email (you can remove this if not needed)
+        // Print student name and email for debug
         print('Student Name: $name, Email: $email');
       });
 
-      // Fetch attendance records for the selected date and mark present students
       QuerySnapshot<Map<String, dynamic>> attendanceQuerySnapshot =
           await FirebaseFirestore.instance
               .collection('attendance')
@@ -180,13 +176,12 @@ class _FetchAttendanceState extends State<FetchAttendance> {
               .get();
 
       attendanceQuerySnapshot.docs.forEach((attendanceDoc) {
-        String reluid = attendanceDoc.id; // Assuming UID is used as document ID
+        String reluid = attendanceDoc.id;
 
         // Mark student as present
         attendanceMap[reluid] = true;
       });
 
-      // List students who are not present or have no attendance data
       List<String> absentStudents = [];
       studentUIDs.forEach((uid) {
         if (!attendanceMap.containsKey("$uid _ $dateString") ||
@@ -204,19 +199,16 @@ class _FetchAttendanceState extends State<FetchAttendance> {
       print('Absent Students: ${absentStudents.length}');
       print('List of absent students: $absentStudents');
 
-      // Populate attendance data list for displaying in the UI
       attendanceData.clear();
       await Future.forEach(studentUIDs, (uid) async {
         DocumentSnapshot userSnapshot =
             await FirebaseFirestore.instance.collection('users').doc(uid).get();
         if (userSnapshot.exists) {
-          Map<String, dynamic>? userData = userSnapshot.data()
-              as Map<String, dynamic>?; // Cast to Map<String, dynamic>
+          Map<String, dynamic>? userData =
+              userSnapshot.data() as Map<String, dynamic>?;
           if (userData != null) {
-            String name =
-                userData['name'] ?? ''; // Fetch student name from Firestore
-            String email =
-                userData['email'] ?? ''; // Fetch student email from Firestore
+            String name = userData['name'] ?? '';
+            String email = userData['email'] ?? '';
             print('Name: $name, Email: $email'); // Debugging
             if (attendanceMap.containsKey("$uid _ $dateString")) {
               // Student present
@@ -235,15 +227,14 @@ class _FetchAttendanceState extends State<FetchAttendance> {
             }
           }
         } else {
-          print('User not found for UID: $uid'); // Debugging
+          print('User not found for UID: $uid');
         }
       });
 
-      setState(() {}); // Refresh UI with attendance data
+      setState(() {});
     } catch (error) {
       print('Error fetching attendance data: $error');
-      // Handle error appropriately, such as displaying an error message
-      // For example:
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error fetching attendance data.'),

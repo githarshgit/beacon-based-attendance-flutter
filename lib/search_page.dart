@@ -54,7 +54,7 @@ class _BleScanPageState extends State<BleScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BLE Device Scanner'),
+        title: Text('Nearby Beacons'),
       ),
       body: Center(
         child: Column(

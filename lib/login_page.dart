@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:smartattendancebeacon/faculty_dashboard.dart';
 import 'admin_dashboard.dart';
 import 'student_dashboard.dart';
@@ -52,12 +53,8 @@ class _LoginPageState extends State<LoginPage> {
               context,
               MaterialPageRoute(builder: (context) => StudentDashboardPage()),
             );
-          } else {
-            // Handle unknown role
-          }
-        } else {
-          // Handle missing role
-        }
+          } else {}
+        } else {}
       }
     } catch (e) {
       print('Login failed: $e');
@@ -86,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple[50],
-        title: Text('Beacon Based Attendance System'),
+        title: Text('Beacon Attendance System'),
         centerTitle: true,
       ),
       body: Container(

@@ -12,14 +12,14 @@ class AddAttendance extends StatefulWidget {
 
 class _AddAttendanceState extends State<AddAttendance> {
   FlutterBlue flutterBlue = FlutterBlue.instance;
-  bool isBluetoothEnabled = false; // Flag to check if Bluetooth is enabled
-  String? loggedInStudentMacAddress; // Logged-in student's MAC address
-  String? loggedInStudentClass; // Logged-in student's class
+  bool isBluetoothEnabled = false;
+  String? loggedInStudentMacAddress;
+  String? loggedInStudentClass;
 
   @override
   void initState() {
     super.initState();
-    // Check if Bluetooth is enabled on app start
+
     checkBluetoothEnabled();
   }
 
@@ -33,8 +33,7 @@ class _AddAttendanceState extends State<AddAttendance> {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(30.0), // Making the button round
+              borderRadius: BorderRadius.circular(30.0),
             ),
           ),
           onPressed: () {
@@ -69,7 +68,6 @@ class _AddAttendanceState extends State<AddAttendance> {
   }
 
   void enableBluetoothAndRetrieveStudentInfo() async {
-    // Assuming you have access to the authenticated user's UID
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     try {
@@ -78,38 +76,31 @@ class _AddAttendanceState extends State<AddAttendance> {
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
       if (userSnapshot.exists) {
-        // Get the data from the user document
         String macAddress = userSnapshot['macAddress'];
         String studentClass = userSnapshot['class'];
-        // Set the logged-in student's information in the state
+
         setState(() {
           loggedInStudentMacAddress = macAddress;
           loggedInStudentClass = studentClass;
         });
-      } else {
-        // User document does not exist
-        // Handle this case accordingly
-      }
+      } else {}
     } catch (error) {
-      // Error occurred while fetching user document
-      // Handle the error
       print('Error fetching user data: $error');
     }
   }
 
   void startBluetoothScan() {
-    // Show progress indicator while scanning
     showDialog(
       context: context,
-      barrierDismissible: false, // Prevent dismissing dialog by tapping outside
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CircularProgressIndicator(), // Progress indicator
+              CircularProgressIndicator(),
               SizedBox(height: 10),
-              Text('Scanning for beacon...'), // Message
+              Text('Scanning for beacon...'),
             ],
           ),
         );
@@ -117,13 +108,13 @@ class _AddAttendanceState extends State<AddAttendance> {
     );
 
     flutterBlue.startScan(timeout: Duration(seconds: 10)).then((results) {
-      Navigator.pop(context); // Dismiss the dialog when scanning is complete
+      Navigator.pop(context);
       for (ScanResult result in results) {
         print((result.device.id.id));
-        // Check if the scanned device MAC address and class match with the logged-in student's information
+
         if (result.device.id.id == loggedInStudentMacAddress) {
           // result.advertisementData.localName == loggedInStudentClass
-          // Mark attendance as present with current date and time
+
           markAttendanceAsPresent();
           return;
         }
@@ -131,12 +122,12 @@ class _AddAttendanceState extends State<AddAttendance> {
       // Student is not in the class
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('You are out of range from Beacon.'),
+          content: Text('No Beacon found nearby!'),
         ),
       );
     }).catchError((error) {
       print('Error scanning for Bluetooth devices: $error');
-      // Dismiss the dialog in case of error
+
       Navigator.pop(context);
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
@@ -149,20 +140,17 @@ class _AddAttendanceState extends State<AddAttendance> {
 
   void markAttendanceAsPresent() {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    // Get the current date and time
+
     DateTime now = DateTime.now();
     int year = now.year;
     int month = now.month;
     int day = now.day;
 
-    // Form the date string in YYYY-MM-DD format
     String dateString =
         '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
 
-    String hour =
-        now.hour.toString().padLeft(2, '0'); // Ensure two digits for hour
-    String minute =
-        now.minute.toString().padLeft(2, '0'); // Ensure two digits for minute
+    String hour = now.hour.toString().padLeft(2, '0');
+    String minute = now.minute.toString().padLeft(2, '0');
 
     String timeAsString = '$hour:$minute';
 
@@ -181,7 +169,9 @@ class _AddAttendanceState extends State<AddAttendance> {
       // Attendance marked successfully
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Attendance marked as present.'),
+          duration: Duration(seconds: 5),
+          content:
+              Text('Attendance Done for $dateString of $loggedInStudentClass'),
         ),
       );
     }).catchError((error) {

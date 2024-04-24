@@ -14,7 +14,7 @@ class BleController extends GetxController {
     }
   }
 
-// This function will help user to connect to BLE devices.
+// to connect to BLE devices.
   Future<void> connectToDevice(BluetoothDevice device) async {
     await device?.connect(timeout: Duration(seconds: 15));
     device?.state.listen((isConnected) {

@@ -1,14 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:smartattendancebeacon/add_student_excel.dart';
-import 'package:smartattendancebeacon/admin_dashboard.dart';
-import 'package:smartattendancebeacon/bluetooth_scan.dart';
-import 'package:smartattendancebeacon/get_attendance.dart';
-import 'add_student.dart';
-import 'package:smartattendancebeacon/faculty_dashboard.dart';
 import 'package:smartattendancebeacon/firebase_options.dart';
 import 'package:smartattendancebeacon/login_page.dart';
-import 'test.dart';
+// import 'package:smartattendancebeacon/add_student_excel.dart';
+// import 'package:smartattendancebeacon/admin_dashboard.dart';
+// import 'package:smartattendancebeacon/bluetooth_scan.dart';
+// import 'package:smartattendancebeacon/get_attendance.dart';
+// import 'add_student.dart';
+// import 'package:smartattendancebeacon/faculty_dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,13 +35,13 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
-        'admin_dashboard': (context) => AdminDashboardPage(),
-        'faculty_dashboard': (context) => FacultyDashboardPage(),
-        'bluetooth_page': (context) => BluetoothScanPage(),
-        'student_form': (context) => AddStudent(),
-        'test': (context) => FetchAttendance(),
-        'addstudent': (context) => AddStudent(),
-        "get_attendance": (context) => AddStudentExcel(),
+        // 'admin_dashboard': (context) => AdminDashboardPage(),
+        // 'faculty_dashboard': (context) => FacultyDashboardPage(),
+        // 'bluetooth_page': (context) => BluetoothScanPage(),
+        // 'student_form': (context) => AddStudent(),
+        // 'test': (context) => FetchAttendance(),
+        // 'addstudent': (context) => AddStudent(),
+        // "get_attendance": (context) => AddStudentExcel(),
       },
       title: const String.fromEnvironment('Beacon Attendance System'),
     ));
