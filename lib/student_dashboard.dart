@@ -26,7 +26,9 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: Text('Faculty Dashboard'),
+        backgroundColor: Colors.purple[50],
+        centerTitle: true,
+        title: Text('Student Dashboard'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),

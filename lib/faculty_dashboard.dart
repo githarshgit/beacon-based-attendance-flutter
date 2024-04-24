@@ -34,6 +34,7 @@ class _FacultyDashboardPageState extends State<FacultyDashboardPage> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.purple[50],
         title: Text('Faculty Dashboard'),
         actions: [
           IconButton(

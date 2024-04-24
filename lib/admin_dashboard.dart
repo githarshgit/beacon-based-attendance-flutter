@@ -62,6 +62,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.purple[50],
         title: Text('Admin Dashboard'),
         actions: [
           IconButton(

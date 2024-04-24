@@ -88,7 +88,7 @@ class _BluetoothScanPageState extends State<BluetoothScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("BLE SCANNER"),
+        title: Text("Nearby Beacons"),
       ),
       body: GetBuilder<BleController>(
         init: BleController(),

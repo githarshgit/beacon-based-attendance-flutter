@@ -31,7 +31,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: MaterialApp(
-      theme: ThemeData(primaryColor: Colors.purpleAccent),
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      themeMode: ThemeMode.dark,
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
@@ -43,7 +44,7 @@ class _MyAppState extends State<MyApp> {
         'addstudent': (context) => AddStudent(),
         "get_attendance": (context) => AddStudentExcel(),
       },
-      title: const String.fromEnvironment('Beacon Attendance Syste'),
+      title: const String.fromEnvironment('Beacon Attendance System'),
     ));
   }
 }

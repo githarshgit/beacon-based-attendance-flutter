@@ -85,13 +85,18 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        backgroundColor: Colors.purple[50],
+        title: Text('Beacon Based Attendance System'),
+        centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text('Login Here'),
             TextField(
               controller: _emailController,
               decoration: InputDecoration(labelText: 'Email'),

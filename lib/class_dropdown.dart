@@ -31,7 +31,9 @@ class classDropdown extends StatelessWidget {
 
         return DropdownButton<String>(
           items: dropdownItems,
-          onChanged: (String? selectedValue) {
+          onChanged: (
+            String? selectedValue,
+          ) {
             onChanged?.call(selectedValue, '');
           },
           hint: Text('Select a class'),

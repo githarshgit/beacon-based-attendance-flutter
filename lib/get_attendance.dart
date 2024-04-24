@@ -12,6 +12,8 @@ class _FetchAttendanceState extends State<FetchAttendance> {
   String? selectedMacAddress;
   TextEditingController _dateController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
+  int presentStudentsCount = 0;
+  int absentStudentsCount = 0;
 
   @override
   void dispose() {
@@ -29,7 +31,7 @@ class _FetchAttendanceState extends State<FetchAttendance> {
           children: [
             Text(
               'Select Class:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             classDropdown(
@@ -41,10 +43,10 @@ class _FetchAttendanceState extends State<FetchAttendance> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Text(
               'Select Date:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             TextFormField(
@@ -70,7 +72,7 @@ class _FetchAttendanceState extends State<FetchAttendance> {
                 suffixIcon: Icon(Icons.calendar_today),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 if (selectedClass != null) {
@@ -85,9 +87,21 @@ class _FetchAttendanceState extends State<FetchAttendance> {
                   );
                 }
               },
-              child: Text('Fetch Attendance'),
+              child: Center(
+                child: Text(
+                  'Fetch Attendance',
+                ),
+              ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10), // Adjust this spacing as needed
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text('Present Students: $presentStudentsCount'),
+                Text('Absent Students: $absentStudentsCount'),
+              ],
+            ),
+            SizedBox(height: 10),
             Text(
               'Attendance List:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -183,7 +197,8 @@ class _FetchAttendanceState extends State<FetchAttendance> {
 
       // Display the attendance status
       int totalStudentsCount = studentUIDs.length;
-      int presentStudentsCount = totalStudentsCount - absentStudents.length;
+      presentStudentsCount = totalStudentsCount - absentStudents.length;
+      absentStudentsCount = absentStudents.length;
       print('Total Students: $totalStudentsCount');
       print('Present Students: $presentStudentsCount');
       print('Absent Students: ${absentStudents.length}');
